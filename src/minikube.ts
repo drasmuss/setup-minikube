@@ -1,7 +1,7 @@
 import {addPath, getInput} from '@actions/core'
 import {exec} from '@actions/exec'
 import {downloadTool} from '@actions/tool-cache'
-import {mkdirP, mv} from '@actions/io'
+import {mkdirP, cp} from '@actions/io'
 import {platform as getPlatform} from 'os'
 import {join} from 'path'
 
@@ -107,6 +107,6 @@ export async function downloadMinikube(version: string): Promise<void> {
     getPlatform() === 'darwin' ? '/Users/runner/bin' : '/home/runner/bin'
   await mkdirP(binPath)
   await exec('chmod', ['+x', downloadPath])
-  await mv(downloadPath, join(binPath, 'minikube'))
+  await cp(downloadPath, join(binPath, 'minikube'))
   addPath(binPath)
 }
